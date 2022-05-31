@@ -1,6 +1,6 @@
-import { IAuthorObject } from "../types/Author";
+import { IAuthorResponseObject } from "../types/Author";
 
-export const fetchAuthorsObject = async (): Promise<IAuthorObject> => {
+export const fetchAuthorsObject = async (): Promise<IAuthorResponseObject> => {
   const URL_FETCH_ALL_BOOKS =
     "https://book-catalog-api-default-rtdb.firebaseio.com/authors.json";
 

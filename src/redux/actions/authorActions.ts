@@ -17,8 +17,6 @@ export const fetchAuthors = createAsyncThunk(
 
         authors.push(author);
       }
-
-      console.log(authors);
       
       return authors;
     } catch (error) {

@@ -4,6 +4,6 @@ export interface IAuthor {
   lastName: string;
 }
 
-export interface IAuthorObject {
+export interface IAuthorResponseObject {
   [key: string]: IAuthor;
 }
