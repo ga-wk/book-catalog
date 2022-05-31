@@ -1,14 +1,16 @@
-interface Groups<T> {
-  [key: string]: T[];
-}
+import { IGroups } from "./types/Groups";
 
 export const groupBy = <T>(data: any[], key: string) => {
   const keys: string[] = [];
   return {
-    groups: data.reduce((acc: Groups<T>, cur) => {
-      const currentKeyValue: string =
+    groups: data.reduce((acc: IGroups<T>, cur) => {
+      let currentKeyValue: string =
         typeof cur[key] === "string" ? cur[key] : String(cur[key]);
 
+      if (currentKeyValue === "undefined") {
+        currentKeyValue = "-1";
+      }
+      
       if (!keys.includes(currentKeyValue)) {
         keys.push(currentKeyValue);
       }
