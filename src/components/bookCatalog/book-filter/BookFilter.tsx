@@ -11,15 +11,15 @@ import filterSlice from "../../../redux/reducers/filterReducer";
 import { IAuthor } from "../../../types/Author";
 import { IBook } from "../../../types/Book";
 import { IGroups, IGroupsBooks } from "../../../types/Groups";
-import { groupBy } from "../../../utils";
+import { arrayGroupBy } from "../../../utils";
 import Select from "../../UI/select/Select";
 
 interface BookFilterProps {}
 
 const BookFilter: FunctionComponent<BookFilterProps> = () => {
-  const book = useAppSelector((state) => state.book);
-  const filter = useAppSelector((state) => state.filter);
-  const author = useAppSelector((state) => state.author);
+  const { books } = useAppSelector((state) => state.book);
+  const { groupBy, sortDirection } = useAppSelector((state) => state.filter);
+  const {authors} = useAppSelector((state) => state.author);
   const { setGroupBy, setSortDirection, setSortedBooks } = filterSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -37,15 +37,15 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
 
   const compareAuthors = (firstAuthorId: string, secondAuthorId: string) => {
     const firstAuthor =
-      author.authors.find((a) => a.id === +firstAuthorId)?.firstName || " ";
+      authors.find((author) => author.id === +firstAuthorId)?.firstName || " ";
     const secondAuthor =
-      author.authors.find((a) => a.id === +secondAuthorId)?.firstName || " ";
+      authors.find((author) => author.id === +secondAuthorId)?.firstName || " ";
 
     return firstAuthor.localeCompare(secondAuthor);
   };
 
   const groupSorting = (direction: string, groupsBooks: IGroupsBooks) => {
-    const isAuthorType = filter.groupBy === groupType.AUTHOR;
+    const isAuthorType = groupBy === groupType.AUTHOR;
 
     switch (direction) {
       case sortDirectionType.ASCENDING:
@@ -75,23 +75,23 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
   };
 
   const organizeBooksIntoGroups = useMemo(() => {
-    if (filter.groupBy === groupType.AUTHOR) {
-      return groupByAuthor(book.books, author.authors);
+    if (groupBy === groupType.AUTHOR) {
+      return groupByAuthor(books, authors);
     }
-    return groupBy<IBook>(book.books, filter.groupBy);
-  }, [book.books, filter.groupBy]);
+    return arrayGroupBy<IBook>(books, groupBy);
+  }, [books, groupBy]);
 
   const sortedAndOrganizeBooks = useMemo(() => {
     const groups = sortingWithinGroups(organizeBooksIntoGroups);
 
-    let keys = groupSorting(filter.sortDirection, organizeBooksIntoGroups);
+    let keys = groupSorting(sortDirection, organizeBooksIntoGroups);
 
     return { groups, keys };
-  }, [organizeBooksIntoGroups, filter.sortDirection]);
+  }, [organizeBooksIntoGroups, sortDirection]);
 
   useEffect(() => {
     dispatch(setSortedBooks(sortedAndOrganizeBooks));
-  }, [book.books, filter.groupBy, filter.sortDirection]);
+  }, [books, groupBy, sortDirection]);
 
   const chooseGroupByHandle = (event: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setGroupBy(event.currentTarget.value));

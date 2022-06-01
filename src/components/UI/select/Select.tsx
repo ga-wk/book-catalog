@@ -23,8 +23,8 @@ const Select: FunctionComponent<ISelect> = ({
       <option value={0} disabled key={0}>
         {defaultOption}
       </option>
-      {options.map((option, index) => (
-        <option value={option.value} key={index + 1}>
+      {options.map((option) => (
+        <option value={option.value} key={option.value}>
           {option.title}
         </option>
       ))}

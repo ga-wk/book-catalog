@@ -7,16 +7,15 @@ import cl from "./bookGroup.module.css";
 
 interface BookGroupProps {
   books: IBook[];
-  authors: IAuthor[];
 }
 
-const BookGroup: FunctionComponent<BookGroupProps> = ({ books, authors }) => {
+const BookGroup: FunctionComponent<BookGroupProps> = ({ books }) => {
   return (
     <div>
       <h2>{books[0].publicationYear ?? "Книги без указания года"}</h2>
       <ul className={cl.list}>
         {books.map((book) => (
-          <BookCard key={book.id} book={book} authors={authors} />
+          <BookCard key={book.id} book={book} />
         ))}
       </ul>
     </div>

@@ -1,15 +1,16 @@
 import React, { FunctionComponent } from "react";
+import { useAppSelector } from "../../../hooks/redux";
 import { IAuthor } from "../../../types/Author";
 import { IBook } from "../../../types/Book";
 
-import cl from "./bookCard.module.css"
+import cl from "./bookCard.module.css";
 
 export interface BookCardProps {
   book: IBook;
-  authors: IAuthor[];
 }
 
-const BookCard: FunctionComponent<BookCardProps> = ({ book, authors }) => {
+const BookCard: FunctionComponent<BookCardProps> = ({ book }) => {
+  const { authors } = useAppSelector((state) => state.author);
   return (
     <li className={cl.card}>
       <p>Название: {book.title}</p>

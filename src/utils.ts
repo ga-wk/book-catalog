@@ -1,6 +1,6 @@
 import { IGroups } from "./types/Groups";
 
-export const groupBy = <T>(data: any[], key: string) => {
+export const arrayGroupBy = <T>(data: any[], key: string) => {
   const keys: string[] = [];
   return {
     groups: data.reduce((acc: IGroups<T>, cur) => {
@@ -10,7 +10,7 @@ export const groupBy = <T>(data: any[], key: string) => {
       if (currentKeyValue === "undefined") {
         currentKeyValue = "-1";
       }
-      
+
       if (!keys.includes(currentKeyValue)) {
         keys.push(currentKeyValue);
       }
@@ -24,3 +24,6 @@ export const groupBy = <T>(data: any[], key: string) => {
     keys: keys,
   };
 };
+
+export const getRandomNumber = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
