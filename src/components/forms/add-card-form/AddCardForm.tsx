@@ -14,7 +14,8 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import authorSlice from "../../../redux/reducers/authorReducer";
 import bookSlice from "../../../redux/reducers/bookReducer";
-import { fetchPostBook } from "../../../services/bookAPI";
+import modalSlice from "../../../redux/reducers/modalReducer";
+import { fetchDeleteBook, fetchPostBook } from "../../../services/bookAPI";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Select from "../../UI/select/Select";
@@ -28,12 +29,24 @@ interface AddCardFormProps {}
 const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
   const { authors } = useAppSelector((state) => state.author);
   const { addAuthor } = authorSlice.actions;
-  const { addBook } = bookSlice.actions;
-  const dispatch = useAppDispatch();
+  const { addBook, removeBook } = bookSlice.actions;
 
-  const [newAuthors, setNewAuthors] = useState<string[]>([]);
+  const { initCardForm, isEdit } = useAppSelector((state) => state.modal);
+  const { closeModal, setEdit } = modalSlice.actions;
+  const dispatch = useAppDispatch();
+  const createInitAuthors = () => {
+    return initCardForm.authors.map((a) => {
+      const currentAuthor = authors.find((aa) => aa.id === a);
+      const firstName = currentAuthor?.firstName;
+      const lastName = currentAuthor?.lastName;
+      const fullName = `${firstName} ${lastName}`
+      
+      return fullName;
+    });
+  };
+  const [newAuthors, setNewAuthors] = useState<string[]>(createInitAuthors());
   const [error, setError] = useState(initError);
-  const [book, setBook] = useState(initBookState);
+  const [book, setBook] = useState(initCardForm);
 
   const clearState = () => {
     setError(initError);
@@ -71,7 +84,7 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
     );
 
     const authorIds: number[] = [];
-   
+
     newAuthors.forEach((newAuthor) => {
       const isAuthor = findAuthor(newAuthor);
       if (isAuthor) {
@@ -104,16 +117,30 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
       const newBook = {
         ...book,
         authors: [...authorIds],
-        rating: book.rating < 0 ? 0 : book.rating,
+        rating: book.rating && book.rating < 0 ? 0 : book.rating,
       };
-
+      console.log(newBook);
       
+      await fetchDeleteBook(book);
+      dispatch(removeBook(book));
+
       const { id } = await fetchPostBook(newBook);
 
       dispatch(addBook({ ...newBook, id: id }));
+      dispatch(closeModal());
       return clearState();
     }
     return setError(error);
+  };
+
+  const editBookHandle = () => {
+    dispatch(setEdit(false));
+  };
+
+  const removeBookHandle = () => {
+    dispatch(removeBook(book));
+    fetchDeleteBook(book);
+    dispatch(closeModal());
   };
 
   return (
@@ -123,20 +150,43 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
         placeholder={HTMLText.PH_TITLE}
         value={book.title}
         onChange={setBookTitltHandle}
+        disabled={isEdit}
       />
       <AddAuthorForm setAuthors={setNewAuthors} />
       <Input
         placeholder={HTMLText.PH_PUBLICATION_YEAR}
         type="number"
         onChange={setBookPublicationYearHandle}
+        value={book.publicationYear}
+        disabled={isEdit}
       />
       <Select
         defaultOption={defaultOptionRatingSelect}
-        options={optionsRatingSelect}
+        options={
+          isEdit
+            ? [{ title: `${book.rating ?? 0}`, value: `${book.rating ?? 0}` }]
+            : optionsRatingSelect
+        }
         onChange={setBookRatingHandle}
+        disabled={isEdit}
       />
-      <Input placeholder={HTMLText.PH_ISBN} onChange={setBookISBNHandle} />
-      <Button type="submit">{HTMLText.BTN_ADD_BOOK}</Button>
+      <Input
+        placeholder={HTMLText.PH_ISBN}
+        onChange={setBookISBNHandle}
+        value={book.ISBN}
+        disabled={isEdit}
+      />
+      {!isEdit && <Button type="submit">{HTMLText.BTN_ADD_BOOK}</Button>}
+      {isEdit && (
+        <Button type="button" onClick={editBookHandle}>
+          {HTMLText.BTN_EDIT_BOOK}
+        </Button>
+      )}
+      {isEdit && (
+        <Button type="button" onClick={removeBookHandle}>
+          {HTMLText.BTN_REMOVE_BOOK}
+        </Button>
+      )}
     </form>
   );
 };

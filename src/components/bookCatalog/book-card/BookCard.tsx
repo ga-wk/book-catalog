@@ -1,6 +1,10 @@
-import React, { FunctionComponent } from "react";
-import { useAppSelector } from "../../../hooks/redux";
+import React, { FunctionComponent, useState } from "react";
+import { HTMLText } from "../../../constants/bookCard";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import modalSlice from "../../../redux/reducers/modalReducer";
 import { IBook } from "../../../types/Book";
+import AddCardForm from "../../forms/add-card-form/AddCardForm";
+import Modal from "../../UI/modal/Modal";
 
 import cl from "./bookCard.module.css";
 
@@ -8,12 +12,6 @@ export interface BookCardProps {
   book: IBook;
   isRecommended: boolean;
 }
-export const HTMLText = {
-  TITLE: "Рекомендуемая книга",
-  AUTHOR: "Автор: ",
-  YEAR: "Год публикации: ",
-  ISBN: "ISBN: ",
-};
 
 const BookCard: FunctionComponent<BookCardProps> = ({
   book,
@@ -54,8 +52,23 @@ const BookCard: FunctionComponent<BookCardProps> = ({
       })
       .join(", ");
   };
+
+  const { openModal } = modalSlice.actions;
+  const dispatch = useAppDispatch();
+  const openModalAddCardFormHandle = () => {
+    dispatch(
+      openModal({
+        initCardForm: {
+          ...book,
+        },
+        title: book.title,
+        isEdit: true,
+      })
+    );
+  };
+
   return (
-    <li className={cl.card}>
+    <li className={cl.card} onClick={openModalAddCardFormHandle}>
       <h3 className={cl.title}>{book.title}</h3>
       <span>
         {HTMLText.AUTHOR}

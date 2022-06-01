@@ -2,11 +2,13 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authorSlice from "../reducers/authorReducer";
 import bookSlice from "../reducers/bookReducer";
 import filterSlice from "../reducers/filterReducer";
+import modalSlice from "../reducers/modalReducer";
 
 const reducers = {
   book: bookSlice.reducer,
   author: authorSlice.reducer,
   filter: filterSlice.reducer,
+  modal: modalSlice.reducer,
 };
 
 const rootReducer = combineReducers({

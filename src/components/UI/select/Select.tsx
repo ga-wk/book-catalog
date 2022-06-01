@@ -14,15 +14,16 @@ interface ISelect
 }
 
 const Select = forwardRef<HTMLSelectElement, ISelect>(
-  ({ options, defaultOption, onChange, ...props }, ref) => {
+  ({ options, defaultOption, onChange, disabled, ...props }, ref) => {
     return (
       <select
         onChange={onChange}
         defaultValue={props.multiple?[]:0}
         multiple={props.multiple}
+        disabled={disabled}
         ref={ref}
       >
-        <option value={0} disabled key={0}>
+        <option value={defaultOption} disabled key={0}>
           {defaultOption}
         </option>
         {options.map((option) => (

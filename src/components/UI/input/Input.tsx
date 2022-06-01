@@ -8,7 +8,7 @@ import cl from "./input.module.css";
 
 const Input: FunctionComponent<
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-> = ({ name, value, onChange, placeholder, className, type }) => {
+> = ({ name, value, onChange, placeholder, className, type, disabled }) => {
   return (
     <input
       type={type}
@@ -17,6 +17,7 @@ const Input: FunctionComponent<
       value={value}
       placeholder={placeholder}
       onChange={onChange}
+      disabled={disabled}
     />
   );
 };

@@ -8,6 +8,7 @@ export const optionsRatingSelect = [...new Array(11)].map((v, index) => {
 });
 
 export const initBookState = {
+  id:"-1",
   title: "",
   authors: [-1],
   publicationYear: -1,
@@ -16,7 +17,9 @@ export const initBookState = {
 };
 
 export const HTMLText = {
-  BTN_ADD_BOOK: "Добавить",
+  BTN_ADD_BOOK: "Сохранить",
+  BTN_EDIT_BOOK: "Редактировать",
+  BTN_REMOVE_BOOK: "Удалить",
   PH_ISBN: "ISBN",
   PH_PUBLICATION_YEAR: "Год публикации",
   PH_TITLE: "Название книги",

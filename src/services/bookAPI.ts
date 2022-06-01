@@ -1,4 +1,4 @@
-import { IBaseBook, IBookGetResponseObject } from "../types/Book";
+import { IBaseBook, IBook, IBookGetResponseObject } from "../types/Book";
 
 export const fetchGetBooksObject =
   async (): Promise<IBookGetResponseObject> => {
@@ -29,6 +29,24 @@ export const fetchPostBook = async (
     const response = await fetch(URL_FETCH_POST_BOOK, {
       method: "POST",
       body: JSON.stringify(book),
+    });
+    const bookObj = await response.json();
+
+    return bookObj;
+  } catch (error) {
+    throw new Error("Ошибка");
+  }
+};
+
+export const fetchDeleteBook = async (
+  book: IBook
+): Promise<{ id: string }> => {
+  const URL_FETCH_DELETE_BOOK =
+  `https://book-catalog-api-default-rtdb.firebaseio.com/books/${book.id}.json`;
+
+  try {
+    const response = await fetch(URL_FETCH_DELETE_BOOK, {
+      method: "DELETE"
     });
     const bookObj = await response.json();
 

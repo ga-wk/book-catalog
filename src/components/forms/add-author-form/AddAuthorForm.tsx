@@ -1,9 +1,11 @@
-import React, { ChangeEvent, FunctionComponent, useRef, useState } from "react";
+import React, { ChangeEvent, FunctionComponent, useEffect, useRef, useState } from "react";
 import {
   HTMLText,
   initAuthorName,
   initError,
 } from "../../../constants/addAuthorForm";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import modalSlice from "../../../redux/reducers/modalReducer";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Select from "../../UI/select/Select";
@@ -18,6 +20,7 @@ interface AddAuthorFormProps {
 const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
   setAuthors,
 }) => {
+  const { authors } = useAppSelector((state) => state.author);
   const authorsSelectRef = useRef<HTMLSelectElement>(null);
   const [authorName, setAuthorName] = useState(initAuthorName);
   const [error, setError] = useState(initError);
@@ -42,7 +45,6 @@ const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
   const addAuthorToCollectionHandle = () => {
     const { isValid, error } = isValidName(authorName.trim());
 
-    
     if (!isValid) {
       return setError(error);
     }
@@ -78,33 +80,56 @@ const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
     }
   };
 
+  const { initCardForm, isEdit } = useAppSelector((state) => state.modal);
+
+  const createInitAuthors = () => {
+    return initCardForm.authors.map((a) => {
+      const currentAuthor = authors.find((aa) => aa.id === a);
+      const firstName = currentAuthor?.firstName;
+      const lastName = currentAuthor?.lastName;
+      const fullName = `${firstName} ${lastName}`
+      
+      return {
+        title: fullName,
+        value: fullName,
+      };
+    });
+  };
+  
   return (
     <div className={cl.addAuthor}>
       <p>{error}</p>
-      <Input
-        type="text"
-        placeholder={HTMLText.PH_ENTER_FIRST_NAME_AND_LAST_NAME_AUTHOR}
-        onChange={inputAuthorNameHandle}
-        value={authorName}
-      />
+      {!isEdit && (
+        <Input
+          type="text"
+          placeholder={HTMLText.PH_ENTER_FIRST_NAME_AND_LAST_NAME_AUTHOR}
+          onChange={inputAuthorNameHandle}
+          value={authorName}
+        />
+      )}
 
-      <Button type="button" onClick={addAuthorToCollectionHandle}>
-        {HTMLText.BTN_ADD_AUTHOR}
-      </Button>
+      {!isEdit && (
+        <Button type="button" onClick={addAuthorToCollectionHandle}>
+          {HTMLText.BTN_ADD_AUTHOR}
+        </Button>
+      )}
 
       <label className={cl.allAuthorSelect}>
         {HTMLText.LIST_AUTHORS}
         <Select
           defaultOption=""
-          options={[]}
+          options={createInitAuthors()}
           multiple={true}
           ref={authorsSelectRef}
+          disabled={isEdit}
         />
       </label>
 
-      <Button type="button" onClick={removeAuthorFromCollectionHandle}>
-        {HTMLText.BTN_REMOVE_SELECT_AUTHOR}
-      </Button>
+      {!isEdit && (
+        <Button type="button" onClick={removeAuthorFromCollectionHandle}>
+          {HTMLText.BTN_REMOVE_SELECT_AUTHOR}
+        </Button>
+      )}
     </div>
   );
 };

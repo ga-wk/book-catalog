@@ -1,24 +1,21 @@
 import React, { FunctionComponent, MouseEventHandler } from "react";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import modalSlice from "../../../redux/reducers/modalReducer";
 
 import cl from "./modal.module.css";
 
-interface ModelProps extends React.HTMLAttributes<HTMLBodyElement> {
-  title: string;
-  isShow: boolean;
-  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
-}
+interface ModelProps extends React.HTMLAttributes<HTMLBodyElement> {}
 
-const Modal: FunctionComponent<ModelProps> = ({
-  children,
-  title,
-  isShow,
-  setIsShow,
-}) => {
+const Modal: FunctionComponent<ModelProps> = ({ children }) => {
+  const { title, isShowModal } = useAppSelector((state) => state.modal);
+  const { closeModal } = modalSlice.actions;
+  const dispatch = useAppDispatch();
+
   const closeModalHandle = (event: React.MouseEvent) => {
-    setIsShow(false);
+    dispatch(closeModal());
   };
 
-  return isShow ? (
+  return isShowModal ? (
     <div className={cl.wrapper} onClick={closeModalHandle}>
       <div
         className={cl.modalWindow}
