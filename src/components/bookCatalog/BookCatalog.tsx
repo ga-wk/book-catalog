@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { useAppSelector } from "../../hooks/redux";
-import AddCardForm from "../forms/add-card-form/AddCardForm";
+import BookAdd from "./book-add/BookAdd";
 import BookFilter from "./book-filter/BookFilter";
 import BookList from "./book-list/BookList";
 import BookRecommended from "./book-recommended/BookRecommended";
+
 export const HTMLText = {
   LOADING: "Загрузка",
 };
@@ -21,7 +22,7 @@ const BookCatalog: FunctionComponent = () => {
     <h1>{isErrorBookOrAauthor}</h1>
   ) : (
     <article>
-      <AddCardForm />
+      <BookAdd />
       <BookFilter />
       <BookRecommended />
       <BookList />
