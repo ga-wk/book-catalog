@@ -10,7 +10,7 @@ const BookList: FunctionComponent<BookListProps> = () => {
   const { sortedBooks } = useAppSelector((state) => state.filter);
 
   return (
-    <div>
+    <div className={cl.scrollList}>
       {sortedBooks.keys.map((key) => {
         const booksGroup = sortedBooks.groups[key];
         return <BookGroup key={key} books={booksGroup} />;

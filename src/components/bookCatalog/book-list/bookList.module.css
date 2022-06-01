@@ -1,0 +1,11 @@
+.scrollList{
+    height: calc(100vh - 430px);
+    overflow-y: scroll;
+}
+
+@media only screen and (max-width: 600px) {
+    .scrollList{
+        height: calc(100vh - 497px);
+    }
+  }
+  

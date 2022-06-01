@@ -5,6 +5,8 @@ import BookFilter from "./book-filter/BookFilter";
 import BookList from "./book-list/BookList";
 import BookRecommended from "./book-recommended/BookRecommended";
 
+import cl from "./bookCatalog.module.css";
+
 export const HTMLText = {
   LOADING: "Загрузка",
 };
@@ -21,12 +23,17 @@ const BookCatalog: FunctionComponent = () => {
   ) : isErrorBookOrAauthor ? (
     <h1>{isErrorBookOrAauthor}</h1>
   ) : (
-    <article>
-      <BookAdd />
-      <BookFilter />
-      <BookRecommended />
-      <BookList />
-    </article>
+    <main className={cl.container}>
+      <aside className={cl.filterBlock}>
+        <BookFilter />
+        <BookAdd />
+      </aside>
+
+      <section className={cl.catalog}>
+        <BookRecommended />
+        <BookList />
+      </section>
+    </main>
   );
 };
 

@@ -32,7 +32,7 @@ const Modal: FunctionComponent<ModelProps> = ({
             </button>
           </header>
 
-          {children}
+          <div className={cl.modalContent}> {children}</div>
         </div>
       </div>
     </div>

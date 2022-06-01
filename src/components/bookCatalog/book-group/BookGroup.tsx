@@ -12,7 +12,7 @@ const BOOKS_WITH_NO_YEAR = "Книги без указания года"
 
 const BookGroup: FunctionComponent<BookGroupProps> = ({ books }) => {
   return (
-    <div>
+    <div className={cl.group}>
       <h2>{books[0].publicationYear ?? BOOKS_WITH_NO_YEAR}</h2>
       <ul className={cl.list}>
         {books.map((book) => (

@@ -4,6 +4,8 @@ import { useAppSelector } from "../../../hooks/redux";
 import { getRandomNumber } from "../../../utils";
 import BookCard from "../book-card/BookCard";
 
+import cl from "./bookRecommended.module.css";
+
 interface BookRecommendedProps {}
 
 const BookRecommended: FunctionComponent<BookRecommendedProps> = () => {
@@ -40,7 +42,7 @@ const BookRecommended: FunctionComponent<BookRecommendedProps> = () => {
   }, [books]);
 
   return getRecommendedBook ? (
-    <div>
+    <div className={cl.bookRecommended}>
       <h2>{HTMLText.RECOMMENDED_BOOK}</h2>
       <BookCard book={getRecommendedBook} />
     </div>

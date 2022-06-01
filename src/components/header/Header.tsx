@@ -6,8 +6,9 @@ interface HeaderProps {}
 const Header: FunctionComponent<HeaderProps> = () => {
   return (
     <header className={cl.header}>
-      <p>LOGO</p>
-      <nav>Панель навигации</nav>
+      <h1>
+        <a href="/">LOGO</a>
+      </h1>
     </header>
   );
 };

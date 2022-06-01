@@ -14,6 +14,8 @@ import { IGroups, IGroupsBooks } from "../../../types/Groups";
 import { arrayGroupBy } from "../../../utils";
 import Select from "../../UI/select/Select";
 
+import cl from "./bookFilter.module.css";
+
 interface BookFilterProps {}
 
 const BookFilter: FunctionComponent<BookFilterProps> = () => {
@@ -104,7 +106,7 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
   };
 
   return (
-    <div>
+    <div className={cl.filters}>
       <Select
         options={selectOptionGroupBy}
         defaultOption={selectTitles.GROUP_BY}
