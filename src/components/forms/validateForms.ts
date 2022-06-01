@@ -22,7 +22,7 @@ export const isValidName = (authorName: string) => {
       error: errorText.ENTER_FIRST_NAME_AND_LAST_NAME_AUTHOR,
     };
   }
-  return { isValid: false, error: "" };
+  return { isValid: true, error: "" };
 };
 
 export const isValidForm = (book: IBaseBook, authors: string[]) => {

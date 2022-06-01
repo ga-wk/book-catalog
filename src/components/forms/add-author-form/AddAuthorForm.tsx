@@ -23,11 +23,11 @@ const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
   const [error, setError] = useState(initError);
 
   const inputAuthorNameHandle = (event: ChangeEvent<HTMLInputElement>) => {
-    setAuthorName(event.currentTarget.value.trim());
+    setAuthorName(event.currentTarget.value);
   };
 
-  const addAuthor = () => {
-    setAuthors((state) => [...state, authorName]);
+  const addAuthor = (name: string) => {
+    setAuthors((state) => [...state, name]);
   };
 
   const removeAuthor = (removedAuthor: string) => {
@@ -40,8 +40,9 @@ const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
   };
 
   const addAuthorToCollectionHandle = () => {
-    const { isValid, error } = isValidName(authorName);
+    const { isValid, error } = isValidName(authorName.trim());
 
+    
     if (!isValid) {
       return setError(error);
     }
@@ -52,7 +53,7 @@ const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
       authorsSelectRef.current.add(option, undefined);
     }
 
-    addAuthor();
+    addAuthor(authorName.trim());
 
     clearState();
   };
