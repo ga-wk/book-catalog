@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fetchPostAuthor } from "../../services/authorAPI";
 import { IAuthor } from "../../types/Author";
 import { fetchAuthors } from "../actions/authorActions";
 
@@ -22,6 +23,7 @@ const authorSlice = createSlice({
   initialState,
   reducers: {
     addAuthor: (state, action: PayloadAction<IAuthor>) => {
+      fetchPostAuthor(action.payload);
       state.authors.push(action.payload);
     },
     removeAuthor: (state, action: PayloadAction<IAuthor>) => {

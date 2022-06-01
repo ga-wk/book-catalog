@@ -14,6 +14,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import authorSlice from "../../../redux/reducers/authorReducer";
 import bookSlice from "../../../redux/reducers/bookReducer";
+import { fetchPostBook } from "../../../services/bookAPI";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Select from "../../UI/select/Select";
@@ -70,7 +71,7 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
     );
 
     const authorIds: number[] = [];
-
+   
     newAuthors.forEach((newAuthor) => {
       const isAuthor = findAuthor(newAuthor);
       if (isAuthor) {
@@ -92,7 +93,7 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
     return authorIds;
   };
 
-  const addBookHandle = (event: FormEvent<HTMLFormElement>) => {
+  const addBookHandle = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const { isValid, error } = isValidForm(book, newAuthors);
@@ -106,9 +107,10 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
         rating: book.rating < 0 ? 0 : book.rating,
       };
 
-      // TO DO сделать api для того чтобы отправлять запрос на сервер и получать id книги
-      dispatch(addBook({ ...newBook, id: "asdas12" }));
+      
+      const { id } = await fetchPostBook(newBook);
 
+      dispatch(addBook({ ...newBook, id: id }));
       return clearState();
     }
     return setError(error);

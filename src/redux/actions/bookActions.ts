@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchBooksObject } from "../../services/bookAPI";
+import {  fetchGetBooksObject } from "../../services/bookAPI";
 import { IBook } from "../../types/Book";
 
 const FETCH_ALL_BOOKS = "book/fetchAll";
@@ -8,7 +8,7 @@ export const fetchBooks = createAsyncThunk(
   FETCH_ALL_BOOKS,
   async (_, thunkAPI) => {
     try {
-      const booksObj = await fetchBooksObject();
+      const booksObj = await fetchGetBooksObject();
 
       const books: IBook[] = [];
 

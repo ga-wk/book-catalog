@@ -10,6 +10,10 @@ export interface IBaseBook {
   ISBN?: string;
 }
 
-export interface IBookResponseObject {
+export interface IBookGetResponseObject {
   [key: string]: IBaseBook;
+}
+
+export interface IBookPostResponseObject {
+  id:string
 }
