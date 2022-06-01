@@ -8,7 +8,7 @@ const initialState: {
   sortedBooks: IGroupsBooks;
 } = {
   groupBy: groupType.YEAR,
-  sortDirection: sortDirectionType.ASCENDING,
+  sortDirection: sortDirectionType.DESCENDING,
   sortedBooks: {
     groups: {},
     keys: [],

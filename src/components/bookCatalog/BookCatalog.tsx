@@ -31,6 +31,7 @@ const BookCatalog: FunctionComponent = () => {
 
       <section className={cl.catalog}>
         <BookRecommended />
+        <hr className={cl.separator} />
         <BookList />
       </section>
     </main>

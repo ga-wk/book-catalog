@@ -18,7 +18,7 @@ const BookGroup: FunctionComponent<BookGroupProps> = ({
   groupTitle,
 }) => {
   const { authors } = useAppSelector((state) => state.author);
-  const { groupBy } = useAppSelector((state) => state.filter);
+  const { groupBy, sortDirection } = useAppSelector((state) => state.filter);
 
   const title = useMemo(() => {
     switch (groupBy) {
@@ -34,10 +34,10 @@ const BookGroup: FunctionComponent<BookGroupProps> = ({
 
   return (
     <div className={cl.group}>
-      <h3>{title}</h3>
+      {title}
       <ul className={cl.list}>
         {books.map((book) => (
-          <BookCard key={book.id} book={book} />
+          <BookCard key={book.id} book={book} isRecommended={false}/>
         ))}
       </ul>
     </div>

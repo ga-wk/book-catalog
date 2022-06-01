@@ -3,11 +3,23 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 294px;
   margin: 0 20px 20px 0;
   padding: 0;
 }
+.card:last-child {
 
+  margin: 0  0 20px 0;
+ 
+}
+
+.card>span,.card>div{
+  margin: 10px;
+}
+
+.title {
+  text-align: center;
+}
 @media only screen and (max-width: 600px) {
   .card {
     margin-right: 0 ;

@@ -15,7 +15,9 @@
   justify-content: center;
   width: 960px;
 }
-
+.separator{
+    width: 100%;
+}
 @media only screen and (max-width: 600px) {
   .container {
     display: flex;

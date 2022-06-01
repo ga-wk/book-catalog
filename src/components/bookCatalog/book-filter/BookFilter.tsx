@@ -48,21 +48,17 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
 
   const groupSorting = (direction: string, groupsBooks: IGroupsBooks) => {
     const isAuthorType = groupBy === groupType.AUTHOR;
-    const isRatingType = groupBy === groupType.RATING;
+
     switch (direction) {
       case sortDirectionType.ASCENDING:
         return isAuthorType
-          ? [...groupsBooks.keys].sort((a, b) => compareAuthors(a, b))
-          : isRatingType
-          ? [...groupsBooks.keys].sort((a, b) => +b - +a)
-          : [...groupsBooks.keys].sort((a, b) => b.localeCompare(a));
+          ? [...groupsBooks.keys].sort((a, b) => compareAuthors(b, a))
+          : [...groupsBooks.keys].sort((a, b) => +a - +b);
 
       case sortDirectionType.DESCENDING:
         return isAuthorType
-          ? [...groupsBooks.keys].sort((a, b) => compareAuthors(b, a))
-          : isRatingType
-          ? [...groupsBooks.keys].sort((a, b) => +a - +b)
-          : [...groupsBooks.keys].sort((a, b) => b.localeCompare(a));
+          ? [...groupsBooks.keys].sort((a, b) => compareAuthors(a, b))
+          : [...groupsBooks.keys].sort((a, b) => +b - +a);
 
       default:
         return groupsBooks.keys;
