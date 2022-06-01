@@ -7,13 +7,14 @@ import cl from "./bookList.module.css";
 interface BookListProps {}
 
 const BookList: FunctionComponent<BookListProps> = () => {
+  
   const { sortedBooks } = useAppSelector((state) => state.filter);
 
   return (
     <div className={cl.scrollList}>
       {sortedBooks.keys.map((key) => {
         const booksGroup = sortedBooks.groups[key];
-        return <BookGroup key={key} books={booksGroup} />;
+        return <BookGroup key={key} books={booksGroup} groupTitle={key} />;
       })}
     </div>
   );

@@ -10,6 +10,7 @@ export interface BookCardProps {
 
 const BookCard: FunctionComponent<BookCardProps> = ({ book }) => {
   const { authors } = useAppSelector((state) => state.author);
+  
   return (
     <li className={cl.card}>
       <p>Название: {book.title}</p>
