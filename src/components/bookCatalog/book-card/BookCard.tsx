@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from "react";
 import { useAppSelector } from "../../../hooks/redux";
-import { IAuthor } from "../../../types/Author";
 import { IBook } from "../../../types/Book";
 
 import cl from "./bookCard.module.css";

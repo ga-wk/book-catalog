@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useMemo } from "react";
+import { HTMLText } from "../../../constants/bookRecommended";
 import { useAppSelector } from "../../../hooks/redux";
 import { getRandomNumber } from "../../../utils";
 import BookCard from "../book-card/BookCard";
@@ -40,11 +41,11 @@ const BookRecommended: FunctionComponent<BookRecommendedProps> = () => {
 
   return getRecommendedBook ? (
     <div>
-      <h2>Рекомендуемая книга</h2>
+      <h2>{HTMLText.RECOMMENDED_BOOK}</h2>
       <BookCard book={getRecommendedBook} />
     </div>
   ) : (
-    <div>Рекомендуемых книг нет</div>
+    <div>{HTMLText.NO_RECOMMENDED_BOOK}</div>
   );
 };
 

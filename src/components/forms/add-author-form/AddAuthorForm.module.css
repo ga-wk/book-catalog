@@ -1,0 +1,11 @@
+.addAuthor {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+
+.allAuthorSelect {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}

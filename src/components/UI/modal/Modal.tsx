@@ -14,14 +14,16 @@ const Modal: FunctionComponent<ModelProps> = ({
   isShow,
   setIsShow,
 }) => {
-  
   const closeModalHandle = (event: React.MouseEvent) => {
     setIsShow(false);
   };
 
   return isShow ? (
-    <div className={cl.wrapper} onClick={closeModalHandle }>
-      <div className={cl.modalWindow} onClick={(event) => event.stopPropagation()}>
+    <div className={cl.wrapper} onClick={closeModalHandle}>
+      <div
+        className={cl.modalWindow}
+        onClick={(event) => event.stopPropagation()}
+      >
         <div className={cl.modal}>
           <header className={cl.modalHeader}>
             <p>{title}</p>
