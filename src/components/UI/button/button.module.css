@@ -1,15 +1,16 @@
+@import url(../../../styles/variables.css);
+
 .button {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   width: 100%;
   padding: 1em;
   line-height: 1.4;
-  background-color: #f9f9f9;
-  border: 1px solid #e5e5e5;
+  background-color: var(--def-bg-c);
+  border: 1px solid var(--def-border-color);
   border-radius: 3px;
   transition: all 0.35s ease-in-out;
   outline: none;
   text-align: center;
-
   margin-top: 20px;
 
   cursor: pointer;
@@ -17,16 +18,16 @@
 
 .button:hover,
 .button:focus {
-  background-color: #ffa812;
-  color: #ffffff;
+  background-color: var(--focus-bg-c);
+  color: var(--focus-text-color);
 }
 
 .button:focus {
-  box-shadow: 0 0 0 4px #ffa81223;
+  box-shadow: 0 0 0 4px var(--focus-border-color);
 }
 
 .button:active {
-  background-color: #ffa81223;
+  background-color: var(--focus-border-color);
   box-shadow: none;
-  color: #ffffff;
+  color: var(--focus-text-color);
 }

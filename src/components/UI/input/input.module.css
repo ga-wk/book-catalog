@@ -1,10 +1,12 @@
+@import url(../../../styles/variables.css);
+
 .input {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  width:calc(100% - 1em) ;
+  width: calc(100% - 1em);
   padding: 1em 0;
   line-height: 1.4;
-  background-color: #f9f9f9;
-  border: 1px solid #e5e5e5;
+  background-color: var(--def-bg-c);
+  border: 1px solid var(--def-border-color);
   border-radius: 3px;
   transition: all 0.35s ease-in-out;
   outline: none;
@@ -13,8 +15,8 @@
   padding-left: 1em;
 }
 
-.input:active,  
+.input:active,
 .input:focus,
 .input[type="checkbox"] {
-  border-color: #ffa812;
+  border-color: var(--focus-bg-c);
 }
