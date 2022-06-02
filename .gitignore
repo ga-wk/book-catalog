@@ -37,3 +37,8 @@ node_modules
 tsconfig.tsbuildinfo
 
 testdata.json
+public
+firebase.json
+.firebaserc
+.firebase
+.github

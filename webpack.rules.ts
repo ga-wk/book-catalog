@@ -1,5 +1,4 @@
 import path from "path";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { RuleSetRule } from "webpack";
 
 const isDevServer = process.env.WEBPACK_SERVE;
@@ -29,30 +28,28 @@ rules.push({
 rules.push({
   test: /\.css$/,
   use: [
-    isDevServer ? "style-loader" : MiniCssExtractPlugin.loader,
+    "style-loader",
     {
       loader: "css-loader",
       options: {
         modules: {
           auto: /\.module\.\w+$/,
-          getLocalIdent: isDevMode
-            ? (
-                loaderContext: any,
-                _localIdentName: any,
-                localName: any,
-                options: any
-              ) => {
-                const request = path
-                  .relative(options.context || "", loaderContext.resourcePath)
-                  .replace(`src${path.sep}`, "")
-                  .replace(".module.css", "")
-                  .replace(".module.scss", "")
-                  .replace(/\\|\//g, "-")
-                  .replace("-index", "")
-                  .replace(/\./g, "_");
-                return `${request}__${localName}`;
-              }
-            : "[hash:base64:5]",
+          getLocalIdent: (
+            loaderContext: any,
+            _localIdentName: any,
+            localName: any,
+            options: any
+          ) => {
+            const request = path
+              .relative(options.context || "", loaderContext.resourcePath)
+              .replace(`src${path.sep}`, "")
+              .replace(".module.css", "")
+              .replace(".module.scss", "")
+              .replace(/\\|\//g, "-")
+              .replace("-index", "")
+              .replace(/\./g, "_");
+            return `${request}__${localName}`;
+          },
         },
       },
     },
@@ -61,7 +58,7 @@ rules.push({
 
 // images
 rules.push({
-  test: /\.(png|jpe?g|gif|webp)(\?.*)?$/, 
+  test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,
   exclude: /(node_modules)/,
   use: [
     {
@@ -95,7 +92,7 @@ rules.push({
       loader: "url-loader",
       options: {
         limit: filesThreshold,
-        name: "fonts/[name].[ext]", 
+        name: "fonts/[name].[ext]",
       },
     },
   ],

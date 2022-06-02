@@ -23,7 +23,7 @@
     "exclude": [
         "node_modules",
         "dist",
-        "build",
+        "publiccc",
         ".vscode",
         "src/tests"
     ]
