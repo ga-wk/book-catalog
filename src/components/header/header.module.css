@@ -3,4 +3,12 @@
   justify-content: center;
   align-items: center;
   height: 80px;
+
+  background-color: #ffa812;
+}
+
+.logo {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 2em;
+  color: #fff;
 }

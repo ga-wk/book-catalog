@@ -8,7 +8,7 @@ const LOGO = "Book Catalog"
 const Header: FunctionComponent<HeaderProps> = () => {
   return (
     <header className={cl.header}>
-      <h1>
+      <h1 className={cl.logo}>
         {LOGO}
       </h1>
     </header>
