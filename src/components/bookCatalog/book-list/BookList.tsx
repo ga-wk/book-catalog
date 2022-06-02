@@ -7,7 +7,6 @@ import cl from "./bookList.module.css";
 interface BookListProps {}
 
 const BookList: FunctionComponent<BookListProps> = () => {
-  
   const { sortedBooks } = useAppSelector((state) => state.filter);
 
   return (

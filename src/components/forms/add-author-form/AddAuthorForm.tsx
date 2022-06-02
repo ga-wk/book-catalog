@@ -1,13 +1,11 @@
 import React, {
   ChangeEvent,
   FunctionComponent,
-  useEffect,
   useRef,
   useState,
 } from "react";
 import { HTMLText, initAuthorName, initError } from "../../../constants/form";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import modalSlice from "../../../redux/reducers/modalReducer";
+import {useAppSelector } from "../../../hooks/redux";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Select from "../../UI/select/Select";
@@ -22,28 +20,44 @@ interface AddAuthorFormProps {
 const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
   setAuthors,
 }) => {
-  const { authors } = useAppSelector((state) => state.author);
   const authorsSelectRef = useRef<HTMLSelectElement>(null);
   const [authorName, setAuthorName] = useState(initAuthorName);
   const [error, setError] = useState(initError);
 
+  /**
+   * Ввод автора
+   */
   const inputAuthorNameHandle = (event: ChangeEvent<HTMLInputElement>) => {
     setAuthorName(event.currentTarget.value);
   };
 
+  /**
+   * Добавление автора из хранилища авторов
+   * @param name имя и фамилия автора
+   */
   const addAuthor = (name: string) => {
     setAuthors((state) => [...state, name]);
   };
 
+  /**
+   * Удаление автора из хранилища авторов
+   * @param removedAuthor имя и фамилия автора
+   */
   const removeAuthor = (removedAuthor: string) => {
     setAuthors((state) => state.filter((author) => author !== removedAuthor));
   };
 
+  /**
+   * Очистка состояний
+   */
   const clearState = () => {
     setError(initError);
     setAuthorName(initAuthorName);
   };
 
+  /**
+   * Добавление автора в коллекцию авторов
+   */
   const addAuthorToCollectionHandle = () => {
     const { isValid, error } = isValidName(authorName.trim());
 
@@ -62,6 +76,9 @@ const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
     clearState();
   };
 
+  /**
+   *  Удаление автора в коллекции авторов
+   */
   const removeAuthorFromCollectionHandle = () => {
     let selected = [];
     if (authorsSelectRef && authorsSelectRef.current) {

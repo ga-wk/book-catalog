@@ -36,3 +36,8 @@
   display: flex;
   justify-content: center;
 }
+@media only screen and (max-width: 600px) {
+  .modalWindow {
+    min-width: 300px;
+  }
+}

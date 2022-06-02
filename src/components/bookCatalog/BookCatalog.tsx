@@ -15,7 +15,9 @@ const BookCatalog: FunctionComponent = () => {
   const book = useAppSelector((state) => state.book);
   const author = useAppSelector((state) => state.author);
 
+  // загружены ли книги и авторы
   const isLoadingBookAndAauthor = book.isLoading && author.isLoading;
+  // есть ли ошибка
   const isErrorBookOrAauthor = book.error || author.error;
 
   return !isLoadingBookAndAauthor ? (

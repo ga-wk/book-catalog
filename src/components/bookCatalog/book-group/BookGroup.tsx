@@ -18,8 +18,9 @@ const BookGroup: FunctionComponent<BookGroupProps> = ({
   groupTitle,
 }) => {
   const { authors } = useAppSelector((state) => state.author);
-  const { groupBy, sortDirection } = useAppSelector((state) => state.filter);
+  const { groupBy} = useAppSelector((state) => state.filter);
 
+  // Заголовок группы
   const title = useMemo(() => {
     switch (groupBy) {
       case groupType.YEAR:

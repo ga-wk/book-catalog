@@ -4,6 +4,7 @@ import bookSlice from "../reducers/bookReducer";
 import filterSlice from "../reducers/filterReducer";
 import modalSlice from "../reducers/modalReducer";
 
+// все редьюсеры
 const reducers = {
   book: bookSlice.reducer,
   author: authorSlice.reducer,

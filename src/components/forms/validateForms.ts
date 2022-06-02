@@ -12,6 +12,11 @@ const errorText = {
   INCORRECT_ISBN: "Не корректный ISBN",
 };
 
+/**
+ * Проверка имени автора
+ * @param authorName Имя и фамилия автора
+ * @returns true если проверка прошла
+ */
 export const isValidName = (authorName: string) => {
   if (authorName === "") {
     return { isValid: false, error: errorText.ENTER_AUTHOR };
@@ -25,6 +30,12 @@ export const isValidName = (authorName: string) => {
   return { isValid: true, error: "" };
 };
 
+/**
+ * Проверка формы cardForm
+ * @param book книга
+ * @param authors авторы
+ * @returns true если проверка прошла
+ */
 export const isValidForm = (book: IBaseBook, authors: string[]) => {
   if (book.title.length < 1) {
     return { isValid: false, error: errorText.TITLE_MUST_BE };

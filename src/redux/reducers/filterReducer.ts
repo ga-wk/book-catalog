@@ -21,12 +21,21 @@ const filterSlice = createSlice({
   name: slicefilterName,
   initialState,
   reducers: {
+    /**
+     * Задать вариант группировки
+     */
     setGroupBy: (state, actions: PayloadAction<string>) => {
       state.groupBy = actions.payload;
     },
+    /**
+     *  Задать вариант направление сортировки
+     */
     setSortDirection: (state, actions: PayloadAction<string>) => {
       state.sortDirection = actions.payload;
     },
+    /**
+     *  Задать вариант отсортированные группы
+     */
     setSortedBooks: (state, actions: PayloadAction<IGroupsBooks>) => {
       state.sortedBooks = actions.payload;
     },

@@ -25,6 +25,11 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
   const { setGroupBy, setSortDirection, setSortedBooks } = filterSlice.actions;
   const dispatch = useAppDispatch();
 
+  /**
+   * Сортировка внутри группы по названию книги
+   * @param groupsBooks группа книг
+   * @returns отсортированная группа
+   */
   const sortingWithinGroups = (groupsBooks: IGroupsBooks) => {
     const groups: IGroups<IBook> = {};
     for (const key in groupsBooks.groups) {
@@ -37,6 +42,12 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
     return groups;
   };
 
+  /**
+   * Сравнение авторов
+   * @param firstAuthorId id первого автора
+   * @param secondAuthorId id второго автора
+   * @returns сравнение двух авторов с помощью localeCompare
+   */
   const compareAuthors = (firstAuthorId: string, secondAuthorId: string) => {
     const firstAuthor =
       authors.find((author) => author.id === +firstAuthorId)?.firstName || " ";
@@ -46,6 +57,12 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
     return firstAuthor.localeCompare(secondAuthor);
   };
 
+  /**
+   * Сортировка групп
+   * @param direction направление сортировки 
+   * @param groupsBooks группы книг
+   * @returns отсортированные группы книг
+   */
   const groupSorting = (direction: string, groupsBooks: IGroupsBooks) => {
     const isAuthorType = groupBy === groupType.AUTHOR;
 
@@ -65,6 +82,12 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
     }
   };
 
+  /**
+   * Группировка книг по авторам
+   * @param books книги
+   * @param authors авторы
+   * @returns группы книг
+   */
   const groupByAuthor = (books: IBook[], authors: IAuthor[]) => {
     const keys = authors.map((author) => String(author.id));
 
@@ -77,6 +100,7 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
     return { groups, keys };
   };
 
+  // Сгруппированные книги
   const organizeBooksIntoGroups = useMemo(() => {
     if (groupBy === groupType.AUTHOR) {
       return groupByAuthor(books, authors);
@@ -84,6 +108,7 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
     return arrayGroupBy<IBook>(books, groupBy);
   }, [books, groupBy]);
 
+  // Отсортированные книги
   const sortedAndOrganizeBooks = useMemo(() => {
     const groups = sortingWithinGroups(organizeBooksIntoGroups);
 
@@ -96,10 +121,16 @@ const BookFilter: FunctionComponent<BookFilterProps> = () => {
     dispatch(setSortedBooks(sortedAndOrganizeBooks));
   }, [books, groupBy, sortDirection]);
 
+  /**
+   * Выбор варианта группировки
+   */
   const chooseGroupByHandle = (event: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setGroupBy(event.currentTarget.value));
   };
 
+  /**
+   * Выбор варианта сортировки
+   */
   const chooseSortDirectionHandle = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {

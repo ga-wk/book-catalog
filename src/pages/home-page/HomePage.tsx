@@ -1,17 +1,16 @@
 import React, { FunctionComponent } from "react";
 import { useEffect } from "react";
 import BookCatalog from "../../components/bookCatalog/BookCatalog";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch} from "../../hooks/redux";
 import { fetchAuthors } from "../../redux/actions/authorActions";
 import { fetchBooks } from "../../redux/actions/bookActions";
-import bookSlice from "../../redux/reducers/bookReducer";
 
 
 const HomePage: FunctionComponent = () => {
-  // const { addBook, removeBook, updateBook } = bookSlice.actions;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    // запросы книг и авторов
     dispatch(fetchBooks());
     dispatch(fetchAuthors());
   }, []);

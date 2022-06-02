@@ -23,12 +23,21 @@ const bookSlice = createSlice({
   name: sliceBookName,
   initialState,
   reducers: {
+    /**
+     * Добавить книгу в глобальный state
+     */
     addBook: (state, action: PayloadAction<IBook>) => {
       state.books.push(action.payload);
     },
+    /**
+     * Удалить книгу из глобального state
+     */
     removeBook: (state, action: PayloadAction<IBook>) => {
       state.books = state.books.filter((s) => s.id !== action.payload.id);
     },
+    /**
+     * Обновить книгу в глобальном state
+     */
     updateBook: (state, action: PayloadAction<IBook>) => {
       const bookIndex = state.books.findIndex(
         (s) => s.id === action.payload.id

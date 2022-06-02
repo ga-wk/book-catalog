@@ -11,6 +11,9 @@ const Modal: FunctionComponent<ModelProps> = ({ children }) => {
   const { closeModal } = modalSlice.actions;
   const dispatch = useAppDispatch();
 
+  /**
+   * Закрытие модального окна изнутри
+   */
   const closeModalHandle = (event: React.MouseEvent) => {
     dispatch(closeModal());
   };

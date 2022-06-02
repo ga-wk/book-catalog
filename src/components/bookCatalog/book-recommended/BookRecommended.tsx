@@ -11,7 +11,8 @@ interface BookRecommendedProps {}
 const BookRecommended: FunctionComponent<BookRecommendedProps> = () => {
   const { books } = useAppSelector((state) => state.book);
 
-  const getHighRating = useMemo(() => {
+  // Самый высогий рейтинг книги
+  const highRating = useMemo(() => {
     return books.reduce((acc, curr) => {
       if (curr.rating) {
         return curr.rating > acc ? curr.rating : acc;
@@ -20,7 +21,8 @@ const BookRecommended: FunctionComponent<BookRecommendedProps> = () => {
     }, 0);
   }, [books]);
 
-  const getRecommendedBook = useMemo(() => {
+  // Рекомендованная книга
+  const recommendedBook = useMemo(() => {
     const allNewAndHighRatingBooks = books.filter((book) => {
       const todayYear = new Date().getFullYear();
       const bookPublicationYear = book.publicationYear || todayYear;
@@ -28,7 +30,7 @@ const BookRecommended: FunctionComponent<BookRecommendedProps> = () => {
       const differenceYear = todayYear - bookPublicationYear;
       const threeYears = 3;
 
-      return differenceYear >= threeYears && book.rating === getHighRating;
+      return differenceYear >= threeYears && book.rating === highRating;
     });
 
     const getRandomBook = () => {
@@ -41,10 +43,10 @@ const BookRecommended: FunctionComponent<BookRecommendedProps> = () => {
     return randomBook;
   }, [books]);
 
-  return getRecommendedBook ? (
+  return recommendedBook ? (
     <div className={cl.bookRecommended}>
       <h2>{HTMLText.RECOMMENDED_BOOK}</h2>
-      <BookCard book={getRecommendedBook} isRecommended={true} />
+      <BookCard book={recommendedBook} isRecommended={true} />
     </div>
   ) : (
     <div>{HTMLText.NO_RECOMMENDED_BOOK}</div>

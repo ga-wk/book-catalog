@@ -1,10 +1,8 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent} from "react";
 import { HTMLText } from "../../../constants/bookCard";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import modalSlice from "../../../redux/reducers/modalReducer";
 import { IBook } from "../../../types/Book";
-import AddCardForm from "../../forms/add-card-form/AddCardForm";
-import Modal from "../../UI/modal/Modal";
 
 import cl from "./bookCard.module.css";
 
@@ -18,7 +16,14 @@ const BookCard: FunctionComponent<BookCardProps> = ({
   isRecommended,
 }) => {
   const { authors } = useAppSelector((state) => state.author);
+  const dispatch = useAppDispatch();
+  const { openModal } = modalSlice.actions;
 
+  /**
+   * Создание звезд рейгинка
+   * @param rating рейтинг книги
+   * @returns JSX Element со звездами
+   */
   const createStars = (rating: number) => {
     const createStarsKeyId = (count: number) => {
       return isRecommended ? "r" + count : book.id + "nr" + count;
@@ -42,6 +47,10 @@ const BookCard: FunctionComponent<BookCardProps> = ({
     ];
   };
 
+  /**
+   * Создание списка авторов
+   * @returns список авторов
+   */
   const createAuthorList = () => {
     return book.authors
       .map((a) => {
@@ -53,8 +62,9 @@ const BookCard: FunctionComponent<BookCardProps> = ({
       .join(", ");
   };
 
-  const { openModal } = modalSlice.actions;
-  const dispatch = useAppDispatch();
+  /**
+   * Открытие модального окна для редактирования книги
+   */
   const openModalEditCardFormHandle = () => {
     dispatch(
       openModal({

@@ -11,7 +11,12 @@ import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Select from "../../UI/select/Select";
 import { isValidName } from "../validateForms";
+
 import cl from "../../../styles/form.module.css";
+import { IOption } from "../../../types/Option";
+import { IBook } from "../../../types/Book";
+import { IAuthor } from "../../../types/Author";
+
 interface EditAuthorFormProps {
   setNewAuthors: React.Dispatch<React.SetStateAction<string[]>>;
   isEdit: boolean;
@@ -23,16 +28,19 @@ const EditAuthorForm: FunctionComponent<EditAuthorFormProps> = ({
 }) => {
   const { authors } = useAppSelector((state) => state.author);
   const { initCardForm } = useAppSelector((state) => state.modal);
-  const [initAuthors, setInitAuthors] = useState<
-    { title: string; value: string }[]
-  >([]);
+  const [initAuthors, setInitAuthors] = useState<IOption[]>([]);
   const [authorName, setAuthorName] = useState(initAuthorName);
   const [error, setError] = useState(initError);
   const authorsSelectRef = useRef<HTMLSelectElement>(null);
-
-  const createInitAuthors = () => {
-    return initCardForm.authors.map((a) => {
-      const currentAuthor = authors.find((aa) => aa.id === a);
+  /**
+   * Создание изначальных авторов в книги
+   * @param initCard начальное состояние книги
+   * @param authors все авторы
+   * @returns изначальные авторы
+   */
+  const createInitAuthors = (initCard: IBook, authors: IAuthor[]) => {
+    return initCard.authors.map((authorId) => {
+      const currentAuthor = authors.find((author) => author.id === authorId);
       const firstName = currentAuthor?.firstName;
       const lastName = currentAuthor?.lastName;
       const fullName = `${firstName} ${lastName}`;
@@ -45,28 +53,45 @@ const EditAuthorForm: FunctionComponent<EditAuthorFormProps> = ({
   };
 
   useEffect(() => {
-    setInitAuthors(createInitAuthors());
+    setInitAuthors(createInitAuthors(initCardForm, authors));
   }, []);
 
+  /**
+   * Ввод имени и фамилии автора
+   */
   const inputAuthorNameHandle = (event: ChangeEvent<HTMLInputElement>) => {
     setAuthorName(event.currentTarget.value);
   };
 
+  /**
+   * Добавление автора из хранилища авторов
+   * @param name имя и фамилия автора
+   */
   const addAuthor = (name: string) => {
     setNewAuthors((state) => [...state, name]);
   };
 
+  /**
+   * Удаление автора из хранилища авторов
+   * @param removedAuthor имя и фамилия автора
+   */
   const removeAuthor = (removedAuthor: string) => {
     setNewAuthors((state) =>
       state.filter((author) => author !== removedAuthor)
     );
   };
 
+  /**
+   * Очистка состояний
+   */
   const clearState = () => {
     setError(initError);
     setAuthorName(initAuthorName);
   };
 
+  /**
+   * Добавление автора в коллекцию авторов
+   */
   const addAuthorToCollectionHandle = () => {
     const { isValid, error } = isValidName(authorName.trim());
 
@@ -85,6 +110,9 @@ const EditAuthorForm: FunctionComponent<EditAuthorFormProps> = ({
     clearState();
   };
 
+  /**
+   *  Удаление автора в коллекции авторов
+   */
   const removeAuthorFromCollectionHandle = () => {
     let selected = [];
     if (authorsSelectRef && authorsSelectRef.current) {

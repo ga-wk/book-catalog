@@ -1,5 +1,9 @@
 import { IBaseBook, IBook, IBookGetResponseObject } from "../types/Book";
 
+/**
+ * Запрос на получение всех книг
+ * @returns книги
+ */
 export const fetchGetBooksObject =
   async (): Promise<IBookGetResponseObject> => {
     const URL_FETCH_ALL_BOOKS =
@@ -16,9 +20,12 @@ export const fetchGetBooksObject =
       throw new Error("Ошибка");
     }
   };
-// {
-//   "name": "-N3TfWWJUrQ3wsVvte9d"
-// }
+
+/**
+ * Запрос на сохранение книги
+ * @param book книга
+ * @returns id книги
+ */
 export const fetchPostBook = async (
   book: IBaseBook
 ): Promise<{ id: string }> => {
@@ -38,6 +45,11 @@ export const fetchPostBook = async (
   }
 };
 
+/**
+ * Запрос на удаление книги
+ * @param book книга
+ * @returns null
+ */
 export const fetchDeleteBook = async (book: IBook): Promise<{ id: string }> => {
   const URL_FETCH_DELETE_BOOK = `https://book-catalog-api-default-rtdb.firebaseio.com/books/${book.id}.json`;
 
@@ -53,6 +65,12 @@ export const fetchDeleteBook = async (book: IBook): Promise<{ id: string }> => {
   }
 };
 
+/**
+ * Запрос на изменение книги
+ * @param book книга
+ * @param id id книги
+ * @returns id книги
+ */
 export const fetchPutBook = async (
   book: IBaseBook,
   id: string

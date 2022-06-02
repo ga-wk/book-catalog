@@ -15,6 +15,10 @@ const BookModal: FunctionComponent<BookAddProps> = () => {
   const { openModal, setEdit } = modalSlice.actions;
   const { isEdit } = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
+
+  /**
+   * Открыкие модального окна для записи новой книги
+   */
   const openModalAddCardFormHandle = () => {
     dispatch(
       openModal({

@@ -1,6 +1,10 @@
 import { IAuthor, IAuthorResponseObject } from "../types/Author";
 
-export const fetchAuthorsObject = async (): Promise<IAuthorResponseObject> => {
+/**
+ * Запрос на получение всех авторов
+ * @returns авторы
+ */
+export const fetchGetAuthors = async (): Promise<IAuthorResponseObject> => {
   const URL_FETCH_ALL_BOOKS =
     "https://book-catalog-api-default-rtdb.firebaseio.com/authors.json";
 
@@ -17,6 +21,11 @@ export const fetchAuthorsObject = async (): Promise<IAuthorResponseObject> => {
   }
 };
 
+/**
+ * Запрос на сохранение автора
+ * @param author автор
+ * @returns id автора
+ */
 export const fetchPostAuthor = async (
   author: IAuthor
 ): Promise<{ id: string }> => {

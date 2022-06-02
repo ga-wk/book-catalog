@@ -28,6 +28,9 @@ const modalSlice = createSlice({
   name: sliceModalName,
   initialState,
   reducers: {
+    /**
+     * Открыть модальное окно
+     */
     openModal: (
       state,
       actions: PayloadAction<{
@@ -41,9 +44,15 @@ const modalSlice = createSlice({
       state.title = actions.payload.title;
       state.isEdit = actions.payload.isEdit;
     },
+    /**
+     * Закрыть модальное окно
+     */
     closeModal: (state) => {
       state.isShowModal = false;
     },
+    /**
+     * Задать вариант модального окна
+     */
     setEdit: (state, actions: PayloadAction<boolean>) => {
       state.isEdit = actions.payload;
     },
