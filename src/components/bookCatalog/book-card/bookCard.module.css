@@ -1,12 +1,17 @@
 .card {
-  border: 1px solid #000;
+  border: 1px solid rgba(0, 0, 0, 0.219);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   width: 294px;
   margin: 0 20px 20px 0;
   padding: 0;
+  border-radius: 5px;
   cursor: pointer;
+}
+
+.card:hover {
+  border-color: #ffa812;
 }
 .card:last-child {
   margin: 0 0 20px 0;
@@ -17,8 +22,19 @@
   margin: 10px;
 }
 
+.checked {
+  color: #ffa812;
+}
+
+.title,
+.card > span,
+.stars > span {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+}
 .title {
   text-align: center;
+  font-size: 1.25em;
 }
 @media only screen and (max-width: 600px) {
   .card {

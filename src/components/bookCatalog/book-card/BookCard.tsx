@@ -40,7 +40,7 @@ const BookCard: FunctionComponent<BookCardProps> = ({
     }
 
     return [
-      <span key={createStarsKeyId(1)} className="checked">
+      <span key={createStarsKeyId(1)} className={cl.checked}>
         {starsChecked.join("")}
       </span>,
       <span key={createStarsKeyId(2)}>{starsUnchecked.join("")}</span>,
@@ -89,7 +89,7 @@ const BookCard: FunctionComponent<BookCardProps> = ({
           {HTMLText.YEAR} {book?.publicationYear}
         </span>
       )}
-      {book?.rating !== undefined && <div>{createStars(book?.rating)}</div>}
+      {book?.rating !== undefined && <div className={cl.stars}>{createStars(book?.rating)}</div>}
       {book?.ISBN && (
         <span>
           {HTMLText.ISBN}

@@ -45,7 +45,7 @@ const BookRecommended: FunctionComponent<BookRecommendedProps> = () => {
 
   return recommendedBook ? (
     <div className={cl.bookRecommended}>
-      <h2>{HTMLText.RECOMMENDED_BOOK}</h2>
+      <h2 className={cl.title}>{HTMLText.RECOMMENDED_BOOK}</h2>
       <BookCard book={recommendedBook} isRecommended={true} />
     </div>
   ) : (

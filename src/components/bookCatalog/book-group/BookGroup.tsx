@@ -24,12 +24,12 @@ const BookGroup: FunctionComponent<BookGroupProps> = ({
   const title = useMemo(() => {
     switch (groupBy) {
       case groupType.YEAR:
-        return <h2>{groupTitle ?? BOOKS_WITH_NO_YEAR}</h2>;
+        return <h2 className={cl.title}>{groupTitle ?? BOOKS_WITH_NO_YEAR}</h2>;
       case groupType.RATING:
-        return <h2>{~groupTitle ? groupTitle : BOOKS_WITH_NO_RATING}</h2>;
+        return <h2 className={cl.title}>{~groupTitle ? groupTitle : BOOKS_WITH_NO_RATING}</h2>;
       case groupType.AUTHOR:
         const author = authors.find((author) => author.id === +groupTitle);
-        return <h2>{`${author?.firstName} ${author?.lastName}`}</h2>;
+        return <h2 className={cl.title}>{`${author?.firstName} ${author?.lastName}`}</h2>;
     }
   }, [groupBy]);
 

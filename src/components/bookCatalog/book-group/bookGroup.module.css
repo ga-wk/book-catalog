@@ -9,6 +9,11 @@
   flex-direction: column;
 }
 
+.title {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.5em;
+}
+
 @media only screen and (max-width: 600px) {
   .group {
     align-items: center;
