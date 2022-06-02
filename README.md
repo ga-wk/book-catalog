@@ -1,1 +1,4 @@
-Book catalog
+## Book catalog
+
+## npm start 
+## npm run build
