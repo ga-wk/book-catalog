@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { useAppSelector } from "../../hooks/redux";
-import BookAdd from "./book-add/BookAdd";
+import BookModal from "./book-add/BookModal";
 import BookFilter from "./book-filter/BookFilter";
 import BookList from "./book-list/BookList";
 import BookRecommended from "./book-recommended/BookRecommended";
@@ -26,7 +26,7 @@ const BookCatalog: FunctionComponent = () => {
     <main className={cl.container}>
       <aside className={cl.filterBlock}>
         <BookFilter />
-        <BookAdd />
+        <BookModal />
       </aside>
 
       <section className={cl.catalog}>

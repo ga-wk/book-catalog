@@ -2,6 +2,7 @@ import React, {
   ChangeEvent,
   FormEvent,
   FunctionComponent,
+  useEffect,
   useState,
 } from "react";
 import {
@@ -15,33 +16,51 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import authorSlice from "../../../redux/reducers/authorReducer";
 import bookSlice from "../../../redux/reducers/bookReducer";
 import modalSlice from "../../../redux/reducers/modalReducer";
-import { fetchDeleteBook, fetchPostBook } from "../../../services/bookAPI";
+import { fetchDeleteBook, fetchPutBook } from "../../../services/bookAPI";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Select from "../../UI/select/Select";
 import AddAuthorForm from "../add-author-form/AddAuthorForm";
 import { isValidForm } from "../validateForms";
 
+interface EditCardFormProps {}
+
 import cl from "../../../styles/form.module.css";
+import EditAuthorForm from "../edit-author-form/EditAuthorForm";
 
-interface AddCardFormProps {}
-
-const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
-  const { authors } = useAppSelector((state) => state.author);
-  const { addAuthor } = authorSlice.actions;
-  const { addBook, removeBook } = bookSlice.actions;
-
+const EditCardForm: FunctionComponent<EditCardFormProps> = () => {
   const { initCardForm } = useAppSelector((state) => state.modal);
-  const { closeModal, setEdit } = modalSlice.actions;
-  const dispatch = useAppDispatch();
-  const [newAuthors, setNewAuthors] = useState<string[]>([]);
-  const [error, setError] = useState(initError);
+  const { authors } = useAppSelector((state) => state.author);
+  const [isEdit, setIsEdit] = useState(true);
   const [book, setBook] = useState(initCardForm);
+  const [error, setError] = useState(initError);
+  const [newAuthors, setNewAuthors] = useState<string[]>([]);
+  const { removeBook, updateBook } = bookSlice.actions;
+  const { addAuthor } = authorSlice.actions;
+  const { closeModal } = modalSlice.actions;
+  const dispatch = useAppDispatch();
 
   const clearState = () => {
     setError(initError);
     setBook(initBookState);
   };
+
+  useEffect(() => {
+    const createInitAuthors = () => {
+      return initCardForm.authors.map((a) => {
+        const currentAuthor = authors.find((aa) => aa.id === a);
+        const firstName = currentAuthor?.firstName;
+        const lastName = currentAuthor?.lastName;
+        const fullName = `${firstName} ${lastName}`;
+
+        return fullName;
+      });
+    };
+
+    const initAuthors = createInitAuthors();
+
+    setNewAuthors(initAuthors);
+  }, []);
 
   const setBookTitltHandle = (event: ChangeEvent<HTMLInputElement>) => {
     setBook({ ...book, title: event.currentTarget.value });
@@ -96,7 +115,7 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
     return authorIds;
   };
 
-  const addBookHandle = async (event: FormEvent<HTMLFormElement>) => {
+  const updateBookHandle = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const { isValid, error } = isValidForm(book, newAuthors);
@@ -111,9 +130,9 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
       };
       console.log(newBook);
 
-      const { id } = await fetchPostBook(newBook);
+      fetchPutBook(newBook, newBook.id);
+      dispatch(updateBook(newBook));
 
-      dispatch(addBook({ ...newBook, id: id }));
       dispatch(closeModal());
 
       return clearState();
@@ -121,34 +140,64 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
     return setError(error);
   };
 
+  const editBookHandle = () => {
+    setIsEdit(false);
+  };
+
+  const removeBookHandle = () => {
+    dispatch(removeBook(book));
+    fetchDeleteBook(book);
+    dispatch(closeModal());
+  };
+
+  const ratingOptions = isEdit
+    ? [{ title: `${book.rating ?? 0}`, value: `${book.rating ?? 0}` }]
+    : optionsRatingSelect;
+
   return (
-    <form className={cl.card} onSubmit={addBookHandle}>
+    <form className={cl.card} onSubmit={updateBookHandle}>
       <p>{error}</p>
       <Input
         placeholder={HTMLText.PH_TITLE}
         value={book.title}
         onChange={setBookTitltHandle}
+        disabled={isEdit}
       />
-      <AddAuthorForm setAuthors={setNewAuthors} />
+      <EditAuthorForm setNewAuthors={setNewAuthors} isEdit={isEdit} />
       <Input
         placeholder={HTMLText.PH_PUBLICATION_YEAR}
         type="number"
         onChange={setBookPublicationYearHandle}
         value={book.publicationYear}
+        disabled={isEdit}
       />
       <Select
         defaultOption={defaultOptionRatingSelect}
-        options={optionsRatingSelect}
+        options={ratingOptions}
         onChange={setBookRatingHandle}
+        disabled={isEdit}
       />
       <Input
         placeholder={HTMLText.PH_ISBN}
         onChange={setBookISBNHandle}
         value={book.ISBN}
+        disabled={isEdit}
       />
-      <Button type="submit">{HTMLText.BTN_ADD_BOOK}</Button>
+      
+      {!isEdit && <Button type="submit">{HTMLText.BTN_UPDATE_BOOK}</Button>}
+
+      {isEdit && (
+        <Button type="button" onClick={editBookHandle}>
+          {HTMLText.BTN_EDIT_BOOK}
+        </Button>
+      )}
+      {isEdit && (
+        <Button type="button" onClick={removeBookHandle}>
+          {HTMLText.BTN_REMOVE_BOOK}
+        </Button>
+      )}
     </form>
   );
 };
 
-export default AddCardForm;
+export default EditCardForm;

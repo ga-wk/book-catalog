@@ -14,7 +14,7 @@ interface ISelect
 }
 
 const Select = forwardRef<HTMLSelectElement, ISelect>(
-  ({ options, defaultOption, onChange, disabled, ...props }, ref) => {
+  ({ options, defaultOption, onChange, disabled=false, ...props }, ref) => {
     return (
       <select
         onChange={onChange}

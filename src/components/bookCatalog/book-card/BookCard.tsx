@@ -55,7 +55,7 @@ const BookCard: FunctionComponent<BookCardProps> = ({
 
   const { openModal } = modalSlice.actions;
   const dispatch = useAppDispatch();
-  const openModalAddCardFormHandle = () => {
+  const openModalEditCardFormHandle = () => {
     dispatch(
       openModal({
         initCardForm: {
@@ -68,7 +68,7 @@ const BookCard: FunctionComponent<BookCardProps> = ({
   };
 
   return (
-    <li className={cl.card} onClick={openModalAddCardFormHandle}>
+    <li className={cl.card} onClick={openModalEditCardFormHandle}>
       <h3 className={cl.title}>{book.title}</h3>
       <span>
         {HTMLText.AUTHOR}
@@ -79,7 +79,7 @@ const BookCard: FunctionComponent<BookCardProps> = ({
           {HTMLText.YEAR} {book?.publicationYear}
         </span>
       )}
-      {book?.rating && <div>{createStars(book?.rating)}</div>}
+      {book?.rating !== undefined && <div>{createStars(book?.rating)}</div>}
       {book?.ISBN && (
         <span>
           {HTMLText.ISBN}

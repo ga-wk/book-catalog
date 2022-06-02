@@ -32,16 +32,16 @@ const BookGroup: FunctionComponent<BookGroupProps> = ({
     }
   }, [groupBy]);
 
-  return (
+  return books.length > 0 ? (
     <div className={cl.group}>
       {title}
       <ul className={cl.list}>
         {books.map((book) => (
-          <BookCard key={book.id} book={book} isRecommended={false}/>
+          <BookCard key={book.id} book={book} isRecommended={false} />
         ))}
       </ul>
     </div>
-  );
+  ) : null;
 };
 
 export default BookGroup;

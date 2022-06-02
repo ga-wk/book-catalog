@@ -1,4 +1,11 @@
-.addAuthor {
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  margin-bottom: 20px;
+}
+
+.author {
   display: flex;
   flex-direction: column;
   max-width: 400px;

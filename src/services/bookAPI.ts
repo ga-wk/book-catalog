@@ -38,15 +38,31 @@ export const fetchPostBook = async (
   }
 };
 
-export const fetchDeleteBook = async (
-  book: IBook
-): Promise<{ id: string }> => {
-  const URL_FETCH_DELETE_BOOK =
-  `https://book-catalog-api-default-rtdb.firebaseio.com/books/${book.id}.json`;
+export const fetchDeleteBook = async (book: IBook): Promise<{ id: string }> => {
+  const URL_FETCH_DELETE_BOOK = `https://book-catalog-api-default-rtdb.firebaseio.com/books/${book.id}.json`;
 
   try {
     const response = await fetch(URL_FETCH_DELETE_BOOK, {
-      method: "DELETE"
+      method: "DELETE",
+    });
+    const bookObj = await response.json();
+
+    return bookObj;
+  } catch (error) {
+    throw new Error("Ошибка");
+  }
+};
+
+export const fetchPutBook = async (
+  book: IBaseBook,
+  id: string
+): Promise<{ id: string }> => {
+  const URL_FETCH_PUT_BOOK = `https://book-catalog-api-default-rtdb.firebaseio.com/books/${id}.json`;
+
+  try {
+    const response = await fetch(URL_FETCH_PUT_BOOK, {
+      method: "PUT",
+      body: JSON.stringify(book),
     });
     const bookObj = await response.json();
 

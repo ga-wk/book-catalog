@@ -6,37 +6,60 @@ import React, {
   useState,
 } from "react";
 import { HTMLText, initAuthorName, initError } from "../../../constants/form";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import modalSlice from "../../../redux/reducers/modalReducer";
+import { useAppSelector } from "../../../hooks/redux";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Select from "../../UI/select/Select";
 import { isValidName } from "../validateForms";
-
 import cl from "../../../styles/form.module.css";
-
-interface AddAuthorFormProps {
-  setAuthors: React.Dispatch<React.SetStateAction<string[]>>;
+interface EditAuthorFormProps {
+  setNewAuthors: React.Dispatch<React.SetStateAction<string[]>>;
+  isEdit: boolean;
 }
 
-const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
-  setAuthors,
+const EditAuthorForm: FunctionComponent<EditAuthorFormProps> = ({
+  setNewAuthors,
+  isEdit,
 }) => {
   const { authors } = useAppSelector((state) => state.author);
-  const authorsSelectRef = useRef<HTMLSelectElement>(null);
+  const { initCardForm } = useAppSelector((state) => state.modal);
+  const [initAuthors, setInitAuthors] = useState<
+    { title: string; value: string }[]
+  >([]);
   const [authorName, setAuthorName] = useState(initAuthorName);
   const [error, setError] = useState(initError);
+  const authorsSelectRef = useRef<HTMLSelectElement>(null);
+
+  const createInitAuthors = () => {
+    return initCardForm.authors.map((a) => {
+      const currentAuthor = authors.find((aa) => aa.id === a);
+      const firstName = currentAuthor?.firstName;
+      const lastName = currentAuthor?.lastName;
+      const fullName = `${firstName} ${lastName}`;
+
+      return {
+        title: fullName,
+        value: fullName,
+      };
+    });
+  };
+
+  useEffect(() => {
+    setInitAuthors(createInitAuthors());
+  }, []);
 
   const inputAuthorNameHandle = (event: ChangeEvent<HTMLInputElement>) => {
     setAuthorName(event.currentTarget.value);
   };
 
   const addAuthor = (name: string) => {
-    setAuthors((state) => [...state, name]);
+    setNewAuthors((state) => [...state, name]);
   };
 
   const removeAuthor = (removedAuthor: string) => {
-    setAuthors((state) => state.filter((author) => author !== removedAuthor));
+    setNewAuthors((state) =>
+      state.filter((author) => author !== removedAuthor)
+    );
   };
 
   const clearState = () => {
@@ -85,33 +108,39 @@ const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
   return (
     <div className={cl.author}>
       <p>{error}</p>
+      {!isEdit && (
+        <Input
+          type="text"
+          placeholder={HTMLText.PH_ENTER_FIRST_NAME_AND_LAST_NAME_AUTHOR}
+          onChange={inputAuthorNameHandle}
+          value={authorName}
+        />
+      )}
 
-      <Input
-        type="text"
-        placeholder={HTMLText.PH_ENTER_FIRST_NAME_AND_LAST_NAME_AUTHOR}
-        onChange={inputAuthorNameHandle}
-        value={authorName}
-      />
-
-      <Button type="button" onClick={addAuthorToCollectionHandle}>
-        {HTMLText.BTN_ADD_AUTHOR}
-      </Button>
+      {!isEdit && (
+        <Button type="button" onClick={addAuthorToCollectionHandle}>
+          {HTMLText.BTN_ADD_AUTHOR}
+        </Button>
+      )}
 
       <label className={cl.allAuthorSelect}>
         {HTMLText.LIST_AUTHORS}
         <Select
           defaultOption=""
-          options={[]}
+          options={initAuthors}
           multiple={true}
           ref={authorsSelectRef}
+          disabled={isEdit}
         />
       </label>
 
-      <Button type="button" onClick={removeAuthorFromCollectionHandle}>
-        {HTMLText.BTN_REMOVE_SELECT_AUTHOR}
-      </Button>
+      {!isEdit && (
+        <Button type="button" onClick={removeAuthorFromCollectionHandle}>
+          {HTMLText.BTN_REMOVE_SELECT_AUTHOR}
+        </Button>
+      )}
     </div>
   );
 };
 
-export default AddAuthorForm;
+export default EditAuthorForm;
