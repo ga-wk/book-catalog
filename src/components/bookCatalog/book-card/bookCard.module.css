@@ -6,14 +6,14 @@
   width: 294px;
   margin: 0 20px 20px 0;
   padding: 0;
+  cursor: pointer;
 }
 .card:last-child {
-
-  margin: 0  0 20px 0;
- 
+  margin: 0 0 20px 0;
 }
 
-.card>span,.card>div{
+.card > span,
+.card > div {
   margin: 10px;
 }
 
@@ -22,6 +22,6 @@
 }
 @media only screen and (max-width: 600px) {
   .card {
-    margin-right: 0 ;
+    margin-right: 0;
   }
 }

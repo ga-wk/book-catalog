@@ -13,6 +13,7 @@ import Select from "../../UI/select/Select";
 import { isValidName } from "../validateForms";
 
 import cl from "../../../styles/form.module.css";
+
 import { IOption } from "../../../types/Option";
 import { IBook } from "../../../types/Book";
 import { IAuthor } from "../../../types/Author";
@@ -135,7 +136,7 @@ const EditAuthorForm: FunctionComponent<EditAuthorFormProps> = ({
 
   return (
     <div className={cl.author}>
-      <p>{error}</p>
+      {error && <p className={cl.error}>{error}</p>}
       {!isEdit && (
         <Input
           type="text"

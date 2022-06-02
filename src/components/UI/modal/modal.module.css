@@ -30,6 +30,14 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  max-width: 500px;
+  font-size: 1.25em;
+}
+
+.title {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  max-width: 270px ;
+  margin-left: 20px;
 }
 
 .modalContent {

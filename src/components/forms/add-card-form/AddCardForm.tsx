@@ -23,6 +23,7 @@ import AddAuthorForm from "../add-author-form/AddAuthorForm";
 import { isValidForm } from "../validateForms";
 
 import cl from "../../../styles/form.module.css";
+
 import {  findAuthor } from "../helpers";
 import { IAuthor } from "../../../types/Author";
 
@@ -144,7 +145,7 @@ const AddCardForm: FunctionComponent<AddCardFormProps> = () => {
 
   return (
     <form className={cl.card} onSubmit={addBookHandle}>
-      <p>{error}</p>
+      {error && <p className={cl.error}>{error}</p>}
       <Input
         placeholder={HTMLText.PH_TITLE}
         value={book.title}

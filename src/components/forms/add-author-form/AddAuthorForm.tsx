@@ -1,11 +1,6 @@
-import React, {
-  ChangeEvent,
-  FunctionComponent,
-  useRef,
-  useState,
-} from "react";
+import React, { ChangeEvent, FunctionComponent, useRef, useState } from "react";
 import { HTMLText, initAuthorName, initError } from "../../../constants/form";
-import {useAppSelector } from "../../../hooks/redux";
+import { useAppSelector } from "../../../hooks/redux";
 import Button from "../../UI/button/Button";
 import Input from "../../UI/input/Input";
 import Select from "../../UI/select/Select";
@@ -101,7 +96,7 @@ const AddAuthorForm: FunctionComponent<AddAuthorFormProps> = ({
 
   return (
     <div className={cl.author}>
-      <p>{error}</p>
+      {error && <p className={cl.error}>{error}</p>}
 
       <Input
         type="text"

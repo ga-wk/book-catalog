@@ -26,7 +26,7 @@ const Modal: FunctionComponent<ModelProps> = ({ children }) => {
       >
         <div className={cl.modal}>
           <header className={cl.modalHeader}>
-            <p>{title}</p>
+            <p className={cl.title}>{title}</p>
             <button type="button" onClick={closeModalHandle}>
               X
             </button>

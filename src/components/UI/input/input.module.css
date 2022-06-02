@@ -1,15 +1,20 @@
 .input {
-  font-family: "Roboto", sans-serif;
-  color: #333;
-  font-size: 16px;
-  box-sizing: border-box;
-  box-shadow: rgba(255, 255, 255, 0.7) 0 1px 0 0 inset;
-  /* margin: 0 auto; */
-  padding: 15px;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 1px solid #e1ecf4;
-  display: block;
-  /* border-bottom: 0.3rem solid transparent; */
-  transition: all 0.3s;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width:calc(100% - 1em) ;
+  padding: 1em 0;
+  line-height: 1.4;
+  background-color: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  transition: all 0.35s ease-in-out;
+  outline: none;
+
+  margin-top: 20px;
+  padding-left: 1em;
+}
+
+.input:active,  
+.input:focus,
+.input[type="checkbox"] {
+  border-color: #ffa812;
 }

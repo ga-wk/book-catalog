@@ -4,6 +4,8 @@ import React, {
   SelectHTMLAttributes,
 } from "react";
 
+import cl from "./select.module.css";
+
 interface ISelect
   extends DetailedHTMLProps<
     SelectHTMLAttributes<HTMLSelectElement>,
@@ -14,11 +16,12 @@ interface ISelect
 }
 
 const Select = forwardRef<HTMLSelectElement, ISelect>(
-  ({ options, defaultOption, onChange, disabled=false, ...props }, ref) => {
+  ({ options, defaultOption, onChange, disabled = false, ...props }, ref) => {
     return (
       <select
+        className={cl.select}
         onChange={onChange}
-        defaultValue={props.multiple?[]:0}
+        defaultValue={props.multiple ? [] : 0}
         multiple={props.multiple}
         disabled={disabled}
         ref={ref}

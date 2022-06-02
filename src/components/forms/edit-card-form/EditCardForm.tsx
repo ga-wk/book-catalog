@@ -192,7 +192,7 @@ const EditCardForm: FunctionComponent<EditCardFormProps> = () => {
 
   return (
     <form className={cl.card} onSubmit={updateBookHandle}>
-      <p>{error}</p>
+     {error && <p className={cl.error}>{error}</p>}
       <Input
         placeholder={HTMLText.PH_TITLE}
         value={book.title}

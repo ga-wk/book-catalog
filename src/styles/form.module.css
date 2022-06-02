@@ -15,4 +15,14 @@
   display: flex;
   flex-direction: column;
   max-width: 400px;
+  margin-top: 20px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
 }
+
+.error {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  color: brown;
+}
+
